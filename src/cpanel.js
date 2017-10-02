@@ -1,5 +1,23 @@
 const request = require('request');
 
+// type FetchzoneRecord = {
+//   domain: string,
+//   record: {
+//     ttl: number,
+//     name: string,
+//     record: string,
+//     Line: number,
+//     type: string,
+//     class: string,
+//     address: string,
+//     line: number
+//   }
+// };
+
+// type FetchzoneRecordsResponse = {
+//   cpanelresult: { data: FetchzoneRecord[] }
+// };
+
 let username;
 let password;
 let domain;
