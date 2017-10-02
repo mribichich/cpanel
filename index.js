@@ -45,7 +45,7 @@ const find = records => {
       return;
     }
 
-    const publicIp = getExternalIp();
+    const publicIp = await getExternalIp();
 
     const cpanelApi = cpanel(AUTH_USERNAME, AUTH_PASSWORD, DOMAIN);
 
@@ -59,12 +59,29 @@ const find = records => {
 
     console.log(domainRecords);
 
-    domainRecords.filter(f => f.record).forEach(f => {
-      console.log(`Updating domain: ${f.domain} in line: ${f.record.line}`);
-      // await cpanelApi.updateRecord(f.record.line, publicIp);
-    });
+    const recordsToUpdate = domainRecords.filter(f => f.record);
 
-    // await cpanelApi.updateRecord();
+    for (var i = 0; i < recordsToUpdate.length; i++) {
+      var recordToUpdate = recordsToUpdate[i];
+
+      console.log(
+        `Updating domain: ${recordToUpdate.domain} in line: ${recordToUpdate
+          .record.line}`
+      );
+
+      await cpanelApi.updateRecord(recordToUpdate.record.line, publicIp);
+
+      return;
+    }
+
+    //  .map(async f => {
+    //   console.log(`Updating domain: ${f.domain} in line: ${f.record.line}`);
+    //   return await cpanelApi.updateRecord(f.record.line, publicIp);
+    // });
+
+    // await Promise.all(all);
+
+    console.log('finished');
   } catch (err) {
     console.error(err);
     process.exit(1);

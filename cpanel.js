@@ -5,7 +5,7 @@ let password;
 let domain;
 
 const createBaseUrl = (username, domain) => {
-  return `https://cpanel.tss.com.ar:2083/cpsess4476754846/json-api/cpanel?cpanel_jsonapi_user=${username}&cpanel_jsonapi_apiversion=2&cpanel_jsonapi_module=ZoneEdit&domain=${domain}`;
+  return `https://cpanel.tss.com.ar:2083/json-api/cpanel?cpanel_jsonapi_user=${username}&cpanel_jsonapi_apiversion=2&cpanel_jsonapi_module=ZoneEdit&domain=${domain}`;
 };
 
 const fetchRecords = () => {
@@ -17,10 +17,10 @@ const fetchRecords = () => {
       .get(url, (err, response, body) => {
         if (err) {
           rej(err);
+          return;
         }
 
         console.log('statusCode:', response && response.statusCode);
-        // console.log('body:', body);
 
         const json = JSON.parse(body);
 
@@ -47,13 +47,13 @@ const updateRecord = (line, address) => {
     const url = `${baseUrl}&cpanel_jsonapi_func=edit_zone_record&Line=${line}&address=${address}`;
 
     request
-      .get(url, (err, response, body) => {
+      .post(url, (err, response, body) => {
         if (err) {
           rej(err);
+          return;
         }
 
-        console.log('statusCode:', response && response.statusCode);
-        // console.log('body:', body);
+        console.log('response:', response.body);
 
         const json = JSON.parse(body);
 
