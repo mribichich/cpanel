@@ -70,8 +70,6 @@ const find = records => {
       );
 
       await cpanelApi.updateRecord(recordToUpdate.record.line, publicIp);
-
-      return;
     }
 
     //  .map(async f => {
